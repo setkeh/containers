@@ -1,0 +1,14 @@
+pipeline:
+  alpine-glibc-container:
+    group: Containers-Base
+    docker:
+    image: plugins/docker
+    pull: true
+    tags:
+      - latest
+      - ${DRONE_REPO_BRANCH//\//-}-${DRONE_BUILD_NUMBER}
+    context: ./alpine-glibc/
+    repo: setkeh/alpine-glibc
+    username: ${DOCKER_USERNAME}
+    password: ${DOCKER_PASSWORD}
+    dockerfile: alpine-glibc/Dockerfile
