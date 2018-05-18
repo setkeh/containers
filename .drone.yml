@@ -6,8 +6,21 @@ pipeline:
     pull: true
     tags:
       - latest
-      - ${DRONE_REPO_BRANCH//\//-}-${DRONE_BUILD_NUMBER}
+      - ${DRONE_REPO_BRANCH//\//-}-${DRONE_COMMIT}
     context: ./alpine-glibc/
     repo: setkeh/alpine-glibc
     secrets: [ DOCKER_USERNAME,DOCKER_PASSWORD ]
     dockerfile: alpine-glibc/Dockerfile
+
+    grafana-alpine-container:
+      group: Containers
+      docker:
+      image: plugins/docker
+      pull: true
+      tags:
+        - latest
+        - ${DRONE_REPO_BRANCH//\//-}-${DRONE_COMMIT}
+      context: ./grafana-alpine/
+      repo: setkeh/grafana-alpine
+      secrets: [ DOCKER_USERNAME,DOCKER_PASSWORD ]
+      dockerfile: grafana-alpine/Dockerfile
