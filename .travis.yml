@@ -4,6 +4,7 @@ services:
   - docker
 
 before_install:
+  - chmod 0777 ./build.sh
   - docker pull alpine:latest
 
 script: ./build.sh
