@@ -6,4 +6,4 @@ services:
 before_install:
   - docker pull alpine:latest
 
-script: bash build.sh
+script: ./build.sh
