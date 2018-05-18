@@ -9,6 +9,5 @@ pipeline:
       - ${DRONE_REPO_BRANCH//\//-}-${DRONE_BUILD_NUMBER}
     context: ./alpine-glibc/
     repo: setkeh/alpine-glibc
-    username: ${DOCKER_USERNAME}
-    password: ${DOCKER_PASSWORD}
+    secrets: [ DOCKER_USERNAME,DOCKER_PASSWORD ]
     dockerfile: alpine-glibc/Dockerfile
