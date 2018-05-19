@@ -13,7 +13,7 @@ pipeline:
     dockerfile: alpine-glibc/Dockerfile
 
   grafana-alpine-container:
-    group: Containers
+    #group: Containers
     docker:
     image: plugins/docker
     pull: true
@@ -24,3 +24,29 @@ pipeline:
     repo: setkeh/grafana-alpine
     secrets: [ DOCKER_USERNAME,DOCKER_PASSWORD ]
     dockerfile: grafana-alpine/Dockerfile
+
+  haproxy-alpine-container:
+    #group: Containers
+    docker:
+    image: plugins/docker
+    pull: true
+    tags:
+      - latest
+      - ${DRONE_REPO_BRANCH//\//-}-${DRONE_COMMIT}
+    context: ./haproxy-alpine/
+    repo: setkeh/haproxy-alpine
+    secrets: [ DOCKER_USERNAME,DOCKER_PASSWORD ]
+    dockerfile: haproxy-alpine/Dockerfile
+
+  archlinux-abs-container:
+    #group: Containers
+    docker:
+    image: plugins/docker
+    pull: true
+    tags:
+      - latest
+      - ${DRONE_REPO_BRANCH//\//-}-${DRONE_COMMIT}
+    context: ./archlinux-abs/
+    repo: setkeh/archlinux-abs
+    secrets: [ DOCKER_USERNAME,DOCKER_PASSWORD ]
+    dockerfile: archlinux-abs/Dockerfile
