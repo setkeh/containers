@@ -13,7 +13,7 @@ pipeline:
     dockerfile: alpine-glibc/Dockerfile
 
   grafana-alpine-container:
-    #group: Containers
+    group: Containers
     docker:
     image: plugins/docker
     pull: true
@@ -26,7 +26,7 @@ pipeline:
     dockerfile: grafana-alpine/Dockerfile
 
   haproxy-alpine-container:
-    #group: Containers
+    group: Containers
     docker:
     image: plugins/docker
     pull: true
@@ -39,7 +39,7 @@ pipeline:
     dockerfile: haproxy-alpine/Dockerfile
 
   archlinux-abs-container:
-    #group: Containers
+    group: Containers
     docker:
     image: plugins/docker
     pull: true
