@@ -1,3 +1,5 @@
+This Image is Heavily based on the grafana/grafana image.
+
 Example Grafana Compose/Docker Stack
 
 ```
