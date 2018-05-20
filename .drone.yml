@@ -12,7 +12,7 @@ pipeline:
     secrets: [ DOCKER_USERNAME,DOCKER_PASSWORD ]
     dockerfile: alpine-glibc/Dockerfile
 
-  alpine-glibc-container:
+  jdk-8-alpine-container:
     group: Secondary-Containers-Base
     docker:
     image: plugins/docker
