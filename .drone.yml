@@ -12,6 +12,19 @@ pipeline:
     secrets: [ DOCKER_USERNAME,DOCKER_PASSWORD ]
     dockerfile: alpine-glibc/Dockerfile
 
+  alpine-glibc-container:
+    group: Secondary-Containers-Base
+    docker:
+    image: plugins/docker
+    pull: true
+    tags:
+      - latest
+      - ${DRONE_REPO_BRANCH//\//-}-${DRONE_COMMIT}
+    context: ./jdk-8-alpine/
+    repo: setkeh/jdk-8-alpine
+    secrets: [ DOCKER_USERNAME,DOCKER_PASSWORD ]
+    dockerfile: jdk-8-alpine/Dockerfile
+
   grafana-alpine-container:
     group: Containers
     docker:
