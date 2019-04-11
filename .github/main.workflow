@@ -1,6 +1,6 @@
 workflow "Build Containers" {
   on = "push"
-  resolves = ["Publish Grafana", "Publish Haproxy Alpine", "Publish JDK 8 Alpine", "Publish Rundeck Alpine", "Publish Archlinux ABS", "Publish Alpine Glibc"]
+  resolves = ["Publish Grafana", "Publish Haproxy Alpine", "Publish JDK 8 Alpine", "Publish Rundeck Alpine", "Publish Archlinux ABS", "Publish Alpine Glibc", "Publish Terraform"]
 }
 
 action "Build Grafana" {
@@ -33,8 +33,13 @@ action "Build Alpine Glibc" {
   args = "build -t setkeh/alpine-glibc:latest alpine-glibc/"
 }
 
+action "Build Terraform" {
+  uses = "actions/docker/cli@master"
+  args = "build -t setkeh/terraform:latest terraform/"
+}
+
 action "Docker Login" {
-  needs = ["Build Grafana", "Build Haproxy Alpine", "Build JDK 8 Alpine", "Build Rundeck Alpine", "Build Archlinux ABS", "Build Alpine Glibc"]
+  needs = ["Build Grafana", "Build Haproxy Alpine", "Build JDK 8 Alpine", "Build Rundeck Alpine", "Build Archlinux ABS", "Build Alpine Glibc", "Build Terraform"]
   uses = "actions/docker/login@master"
   secrets = ["DOCKER_USERNAME", "DOCKER_PASSWORD"]
 }
@@ -73,4 +78,10 @@ action "Publish Alpine Glibc" {
   needs = ["Docker Login"]
   uses = "actions/action-builder/docker@master"
   runs = "docker push setkeh/alpine-glibc:latest"
+}
+
+action "Publish Terraform" {
+  needs = ["Docker Login"]
+  uses = "actions/action-builder/docker@master"
+  runs = "docker push setkeh/terraform:latest"
 }
