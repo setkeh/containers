@@ -1,6 +1,6 @@
 workflow "Build Containers" {
   on = "push"
-  resolves = ["Publish"]
+  resolves = ["Publish Grafana", "Publish Haproxy Alpine"]
 }
 
 action "Build Grafana" {
