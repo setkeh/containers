@@ -1,6 +1,6 @@
 workflow "Build Containers" {
   on = "push"
-  resolves = ["Publish Grafana", "Publish Haproxy Alpine"]
+  resolves = ["Publish Grafana", "Publish Haproxy Alpine", "Publish JDK 8 Alpine", "Publish Rundeck Alpine", "Publish Archlinux ABS", "Publish Alpine Glibc"]
 }
 
 action "Build Grafana" {
@@ -13,8 +13,28 @@ action "Build Haproxy Alpine" {
   args = "build -t setkeh/haproxy-alpine:latest haproxy-alpine/"
 }
 
+action "Build JDK 8 Alpine" {
+  uses = "actions/docker/cli@master"
+  args = "build -t setkeh/jdk-8-alpine:latest jdk-8-alpine/"
+}
+
+action "Build Rundeck Alpine" {
+  uses = "actions/docker/cli@master"
+  args = "build -t setkeh/rundeck-alpine:latest rundeck-alpine/"
+}
+
+action "Build Archlinux ABS" {
+  uses = "actions/docker/cli@master"
+  args = "build -t setkeh/archlinux-abs:latest archlinux-abs/"
+}
+
+action "Build Alpine Glibc" {
+  uses = "actions/docker/cli@master"
+  args = "build -t setkeh/alpine-glibc:latest alpine-glibc/"
+}
+
 action "Docker Login" {
-  needs = ["Build Grafana", "Build Haproxy Alpine"]
+  needs = ["Build Grafana", "Build Haproxy Alpine", "Build JDK 8 Alpine", "Build Rundeck Alpine", "Build Archlinux ABS", "Build Alpine Glibc"]
   uses = "actions/docker/login@master"
   secrets = ["DOCKER_USERNAME", "DOCKER_PASSWORD"]
 }
@@ -29,4 +49,28 @@ action "Publish Haproxy Alpine" {
   needs = ["Docker Login"]
   uses = "actions/action-builder/docker@master"
   runs = "docker push setkeh/haproxy-alpine:latest"
+}
+
+action "Publish JDK 8 Alpine" {
+  needs = ["Docker Login"]
+  uses = "actions/action-builder/docker@master"
+  runs = "docker push setkeh/jdk-8-alpine:latest"
+}
+
+action "Publish Rundeck Alpine" {
+  needs = ["Docker Login"]
+  uses = "actions/action-builder/docker@master"
+  runs = "docker push setkeh/rundeck-alpine:latest"
+}
+
+action "Publish Archlinux ABS" {
+  needs = ["Docker Login"]
+  uses = "actions/action-builder/docker@master"
+  runs = "docker push setkeh/archlinux-abs:latest"
+}
+
+action "Publish Alpine Glibc" {
+  needs = ["Docker Login"]
+  uses = "actions/action-builder/docker@master"
+  runs = "docker push setkeh/alpine-glibc:latest"
 }
