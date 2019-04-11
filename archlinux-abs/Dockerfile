@@ -1,5 +1,5 @@
 #Dockerfile for Spinning up ABS Instances.
-FROM base/archlinux:latest
+FROM archlinux/base:latest
 LABEL maintainer "James Griffis <setkeh@gmail.com>"
 
 RUN pacman-key --init && \
