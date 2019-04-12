@@ -3,11 +3,6 @@ workflow "Build Containers" {
   resolves = ["Publish Grafana", "Publish Haproxy Alpine", "Publish JDK 8 Alpine", "Publish Rundeck Alpine", "Publish Archlinux ABS", "Publish Alpine Glibc", "Publish Terraform"]
 }
 
-action "Build Grafana" {
-  uses = "actions/docker/cli@master"
-  args = "build -t setkeh/grafana-alpine:latest grafana-alpine/"
-}
-
 action "Build Haproxy Alpine" {
   uses = "actions/docker/cli@master"
   args = "build -t setkeh/haproxy-alpine:latest haproxy-alpine/"
@@ -31,6 +26,12 @@ action "Build Archlinux ABS" {
 action "Build Alpine Glibc" {
   uses = "actions/docker/cli@master"
   args = "build -t setkeh/alpine-glibc:latest alpine-glibc/"
+}
+
+action "Build Grafana" {
+  needs = ["Build Alpine Glibc"]
+  uses = "actions/docker/cli@master"
+  args = "build -t setkeh/grafana-alpine:latest grafana-alpine/"
 }
 
 action "Build Terraform" {
