@@ -3,7 +3,17 @@ MAINTAINER "James <SETKEH> Griffis <setkeh@gmail.com>"
 
 ENV TERRAFORM_VERSION=0.10.0
 
-RUN apk add --update git bash openssh
+RUN apk update && apk upgrade && apk add --update \
+      git \
+      bash \
+      openssh \
+      python3-dev \
+      python3 \
+      tzdata \
+      jq && \
+    mkdir -p /etc/ssl/certs/ && \
+    update-ca-certificates --fresh && \
+    pip3 install --upgrade pip awscli==1.16.132
 
 ENV TF_DEV=true
 ENV TF_RELEASE=true
