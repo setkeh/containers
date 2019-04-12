@@ -24,4 +24,8 @@ RUN git clone https://github.com/hashicorp/terraform.git ./ && \
     go install && \
     cp $GOPATH/bin/terraform /bin/
 
+COPY artefacts/tf-init-plan.sh /tf-init-plan.sh
+
+RUN chmod +x /tf-init-plan.sh
+
 WORKDIR $GOPATH
