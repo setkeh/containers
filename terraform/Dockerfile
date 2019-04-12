@@ -1,7 +1,7 @@
 FROM golang:alpine
 MAINTAINER "James <SETKEH> Griffis <setkeh@gmail.com>"
 
-ENV TERRAFORM_VERSION=0.10.0
+ENV TERRAFORM_VERSION=0.11.11
 
 RUN apk update && apk upgrade && apk add --update \
       git \
