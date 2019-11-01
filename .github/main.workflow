@@ -1,6 +1,11 @@
 workflow "Build Containers" {
   on = "push"
-  resolves = ["Publish Grafana", "Publish Haproxy Alpine", "Publish JDK 8 Alpine", "Publish Rundeck Alpine", "Publish Archlinux ABS", "Publish Alpine Glibc", "Publish Terraform"]
+  resolves = ["Publish AWS ECR Proxy", "Publish Grafana", "Publish Haproxy Alpine", "Publish JDK 8 Alpine", "Publish Rundeck Alpine", "Publish Archlinux ABS", "Publish Alpine Glibc", "Publish Terraform"]
+}
+
+action "Build AWS ECR Proxy" {
+  uses = "actions/docker/cli@master"
+  args = "build -t setkeh/aws-ecr-proxy:latest aws-ecr-proxy/"
 }
 
 action "Build Haproxy Alpine" {
@@ -40,9 +45,15 @@ action "Build Terraform" {
 }
 
 action "Docker Login" {
-  needs = ["Build Grafana", "Build Haproxy Alpine", "Build JDK 8 Alpine", "Build Rundeck Alpine", "Build Archlinux ABS", "Build Alpine Glibc", "Build Terraform"]
+  needs = ["Build AWS ECR Proxy", "Build Grafana", "Build Haproxy Alpine", "Build JDK 8 Alpine", "Build Rundeck Alpine", "Build Archlinux ABS", "Build Alpine Glibc", "Build Terraform"]
   uses = "actions/docker/login@master"
   secrets = ["DOCKER_USERNAME", "DOCKER_PASSWORD"]
+}
+
+action "Publish AWS ECR Proxy" {
+  needs = ["Docker Login"]
+  uses = "actions/action-builder/docker@master"
+  runs = "docker push setkeh/aws-ecr-proxy:latest"
 }
 
 action "Publish Grafana" {
