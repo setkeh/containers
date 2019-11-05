@@ -43,6 +43,7 @@ jobs:
     - uses: actions/checkout@master
     - name: Publish grafana-alpine
       uses: elgohr/Publish-Docker-Github-Action@master
+      needs: build-alpine-glibc
       with:
         name: setkeh/grafana-alpine
         username: ${{ secrets.DOCKER_USERNAME }}
