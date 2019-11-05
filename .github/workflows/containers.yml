@@ -13,3 +13,99 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}
         snapshot: true
         workdir: aws-ecr-proxy
+  build-alpine-glibc:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Publish alpine-glibc
+      uses: elgohr/Publish-Docker-Github-Action@master
+      with:
+        name: setkeh/alpine-glibc
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        snapshot: true
+        workdir: alpine-glibc
+  build-archlinux-abs:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Publish archlinux-abs
+      uses: elgohr/Publish-Docker-Github-Action@master
+      with:
+        name: setkeh/archlinux-abs
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        snapshot: true
+        workdir: archlinux-abs
+  build-grafana-alpine:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Publish grafana-alpine
+      uses: elgohr/Publish-Docker-Github-Action@master
+      with:
+        name: setkeh/grafana-alpine
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        snapshot: true
+        workdir: grafana-alpine
+  build-haproxy-alpine:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Publish haproxy-alpine
+      uses: elgohr/Publish-Docker-Github-Action@master
+      with:
+        name: setkeh/haproxy-alpine
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        snapshot: true
+        workdir: haproxy-alpine
+  build-jdk-8-alpine:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Publish jdk-8-alpine
+      uses: elgohr/Publish-Docker-Github-Action@master
+      with:
+        name: setkeh/jdk-8-alpine
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        snapshot: true
+        workdir: jdk-8-alpine
+  build-jupyter:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Publish jupyter
+      uses: elgohr/Publish-Docker-Github-Action@master
+      with:
+        name: setkeh/jupyter
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        snapshot: true
+        workdir: jupyter
+  build-rundeck-alpine:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Publish rundeck-alpine
+      uses: elgohr/Publish-Docker-Github-Action@master
+      with:
+        name: setkeh/rundeck-alpine
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        snapshot: true
+        workdir: rundeck-alpine
+  build-terraform:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Publish terraform
+      uses: elgohr/Publish-Docker-Github-Action@master
+      with:
+        name: setkeh/terraform
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        snapshot: true
+        workdir: terraform
