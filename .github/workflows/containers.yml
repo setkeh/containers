@@ -1,11 +1,15 @@
-name: Build Docker Hub Containers
-
+name: Build Docker Hub Containers 
 on: [push]
-
 jobs:
-  build:
-    runs-on: docker://docker:latest
+  build-ecr-container:
+    runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
-    - name: Build AWS ECR Proxy
-      run: docker build . --file Dockerfile --tag aws-ecr-proxy:latest
+    - uses: actions/checkout@master
+    - name: Publish aws-ecr-proxy
+      uses: elgohr/Publish-Docker-Github-Action@master
+      with:
+        name: setkeh/aws-ecr-proxy
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        snapshot: true
+        workdir: aws-ecr-proxy
