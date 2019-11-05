@@ -39,11 +39,11 @@ jobs:
         workdir: archlinux-abs
   build-grafana-alpine:
     runs-on: ubuntu-latest
+    needs: build-alpine-glibc
     steps:
     - uses: actions/checkout@master
     - name: Publish grafana-alpine
-      uses: elgohr/Publish-Docker-Github-Action@master
-      needs: build-alpine-glibc
+      uses: elgohr/Publish-Docker-Github-Action@master 
       with:
         name: setkeh/grafana-alpine
         username: ${{ secrets.DOCKER_USERNAME }}
