@@ -87,4 +87,6 @@ sed -i "s|REGISTRY_URL|$reg_url|g" ${nx_conf}
 
 /renew_token.sh &
 
-exec "$@"
+#exec "$@"
+
+nginx -g daemon off
