@@ -89,4 +89,4 @@ sed -i "s|REGISTRY_URL|$reg_url|g" ${nx_conf}
 
 #exec "$@"
 
-nginx 
+nginx -g 'daemon off;' 
