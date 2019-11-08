@@ -2,7 +2,8 @@ FROM setkeh/alpine-glibc:latest
 
 LABEL maintainer "James Griffis <setkeh@gmail.com>"
 
-ARG GRAFANA_URL="https://s3-us-west-2.amazonaws.com/grafana-releases/master/grafana-latest.linux-x64.tar.gz"
+ARG GRAFANA_VER="6.4.4"
+ARG GRAFANA_URL="https://dl.grafana.com/oss/release/grafana-${GRAFANA_VER}.linux-amd64.tar.gz"
 ARG GF_UID="472"
 ARG GF_GID="472"
 
@@ -30,7 +31,7 @@ RUN apk add --update --no-cache bash tar fontconfig curl ca-certificates shadow 
     chown -R grafana:grafana "$GF_PATHS_DATA" "$GF_PATHS_HOME/.aws" "$GF_PATHS_LOGS" "$GF_PATHS_PLUGINS" && \
     chmod 777 "$GF_PATHS_DATA" "$GF_PATHS_HOME/.aws" "$GF_PATHS_LOGS" "$GF_PATHS_PLUGINS" && \
     apk del curl tar && \
-    rm -rf grafana-latest.linux-x64.tar.gz
+    rm -rf grafana-${GRAFANA_VER}.linux-amd64.tar.gz
 
 VOLUME ["/var/lib/grafana"]
 
