@@ -9,7 +9,7 @@ ARG PROM_GID="473"
 ENV prometheus_version 2.13.1
 
 RUN adduser -r -u $PROM_UID -s /bin/false -D -H prometheus \
-    && groupadd -r -g $PROM_GID prometheus && \
+    && groupadd -r -g $PROM_GID prometheus \
     && adduser -s /bin/false -D -H node_exporter \
     && apk update \
     && apk --no-cache add curl \
