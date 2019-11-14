@@ -3,9 +3,13 @@ FROM alpine:latest
 LABEL maintainer="setkeh@gmail.com"
 LABEL version="1.0"
 
+ARG PROM_UID="473"
+ARG PROM_GID="473"
+
 ENV prometheus_version 2.13.1
 
-RUN adduser -s /bin/false -D -H prometheus \
+RUN adduser -r -u $PROM_UID -s /bin/false -D -H prometheus \
+    && groupadd -r -g $PROM_GID prometheus && \
     && adduser -s /bin/false -D -H node_exporter \
     && apk update \
     && apk --no-cache add curl \
@@ -26,6 +30,7 @@ RUN adduser -s /bin/false -D -H prometheus \
 VOLUME /etc/prometheus
 VOLUME /var/lib/prometheus
 
+USER prometheus
 ENTRYPOINT /usr/local/bin/prometheus \ 
             --config.file /etc/prometheus/prometheus.yml \ 
             --storage.tsdb.path /var/lib/prometheus/ \
