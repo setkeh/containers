@@ -18,15 +18,23 @@ jobs:
       run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
     - name: Publish Docker Image
       run: docker push setkeh/aws-ecr-proxy:latest
-#    - uses: actions/checkout@master
-#    - name: Publish aws-ecr-proxy
-#      uses: elgohr/Publish-Docker-Github-Action@master
-#      with:
-#        name: setkeh/aws-ecr-proxy
-#        username: ${{ secrets.DOCKER_USERNAME }}
-#        password: ${{ secrets.DOCKER_PASSWORD }}
-#        snapshot: true
-#        workdir: aws-ecr-proxy
+  build-prometheus-alpine:
+    runs-on: self-hosted
+    steps:
+    - uses: actions/checkout@v1
+    - name: Build the Docker image
+      run: docker build aws-ecr-proxy/ -t setkeh/prometheus-alpine:latest
+    - uses: anchore/scan-action@master
+      with:
+        image-reference: "setkeh/prometheus-alpine:latest"
+        dockerfile-path: "prometheus-alpine/Dockerfile"
+        fail-build: true
+    - name: anchore inline scan JSON results
+      run: for j in `ls ./anchore-reports/*.json`; do echo "---- ${j} ----"; cat ${j}; echo; done
+    - name: Docker Login
+      run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+    - name: Publish Docker Image
+      run: docker push setkeh/prometheus-alpine:latest
 #  build-prometheus-alpine:
 #    runs-on: self-hosted
 #    steps:
