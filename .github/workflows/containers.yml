@@ -2,7 +2,7 @@ name: Build Docker Hub Containers
 on: [push]
 jobs:
   build-ecr-container:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
     - name: Build the Docker image
@@ -19,11 +19,11 @@ jobs:
     - name: Publish Docker Image
       run: docker push setkeh/aws-ecr-proxy:latest
   build-prometheus-alpine:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
     - name: Build the Docker image
-      run: docker build aws-ecr-proxy/ -t setkeh/prometheus-alpine:latest
+      run: docker build prometheus-alpine/ -t setkeh/prometheus-alpine:latest
     - uses: anchore/scan-action@master
       with:
         image-reference: "setkeh/prometheus-alpine:latest"
