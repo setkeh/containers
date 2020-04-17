@@ -12,7 +12,6 @@ jobs:
         image-reference: "setkeh/aws-ecr-proxy:latest"
         dockerfile-path: "aws-ecr-proxy/Dockerfile"
         fail-build: true
-        debug: true
     - name: anchore inline scan JSON results
       run: for j in `ls ./anchore-reports/*.json`; do echo "---- ${j} ----"; cat ${j}; echo; done
     - name: Docker Login
