@@ -6,7 +6,7 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Build the Docker image
-      run: docker build aws-ecr-proxy --file Dockerfile --tag setkeh/aws-ecr-proxy:latest
+      run: docker build aws-ecr-proxy/ --file Dockerfile --tag setkeh/aws-ecr-proxy:latest
     - uses: anchore/scan-action@master
       with:
         image-reference: "setkeh/aws-ecr-proxy:latest"
