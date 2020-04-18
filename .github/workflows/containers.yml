@@ -35,113 +35,140 @@ jobs:
       run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
     - name: Publish Docker Image
       run: docker push setkeh/prometheus-alpine:latest
-#  build-prometheus-alpine:
-#    runs-on: self-hosted
-#    steps:
-#    - uses: actions/checkout@master
-#    - name: Publish prometheus-alpine
-#      uses: elgohr/Publish-Docker-Github-Action@master
-#      with:
-#        name: setkeh/prometheus-alpine
-#        username: ${{ secrets.DOCKER_USERNAME }}
-#        password: ${{ secrets.DOCKER_PASSWORD }}
-#        snapshot: true
-#        workdir: prometheus-alpine
-#  build-alpine-glibc:
-#    runs-on: self-hosted
-#    steps:
-#    - uses: actions/checkout@master
-#    - name: Publish alpine-glibc
-#      uses: elgohr/Publish-Docker-Github-Action@master
-#      with:
-#        name: setkeh/alpine-glibc
-#        username: ${{ secrets.DOCKER_USERNAME }}
-#        password: ${{ secrets.DOCKER_PASSWORD }}
-#        snapshot: true
-#        workdir: alpine-glibc
-#  build-archlinux-abs:
-#    runs-on: self-hosted
-#    steps:
-#    - uses: actions/checkout@master
-#    - name: Publish archlinux-abs
-#      uses: elgohr/Publish-Docker-Github-Action@master
-#      with:
-#        name: setkeh/archlinux-abs
-#        username: ${{ secrets.DOCKER_USERNAME }}
-#        password: ${{ secrets.DOCKER_PASSWORD }}
-#        snapshot: true
-#        workdir: archlinux-abs
-#  build-grafana-alpine:
-#    runs-on: self-hosted
-#    needs: build-alpine-glibc
-#    steps:
-#    - uses: actions/checkout@master
-#    - name: Publish grafana-alpine
-#      uses: elgohr/Publish-Docker-Github-Action@master 
-#      with:
-#        name: setkeh/grafana-alpine
-#        username: ${{ secrets.DOCKER_USERNAME }}
-#        password: ${{ secrets.DOCKER_PASSWORD }}
-#        snapshot: true
-#        workdir: grafana-alpine
-#  build-haproxy-alpine:
-#    runs-on: self-hosted
-#    steps:
-#    - uses: actions/checkout@master
-#    - name: Publish haproxy-alpine
-#      uses: elgohr/Publish-Docker-Github-Action@master
-#      with:
-#        name: setkeh/haproxy-alpine
-#        username: ${{ secrets.DOCKER_USERNAME }}
-#        password: ${{ secrets.DOCKER_PASSWORD }}
-#        snapshot: true
-#        workdir: haproxy-alpine
-#  build-jdk-8-alpine:
-#    runs-on: self-hosted
-#    steps:
-#    - uses: actions/checkout@master
-#    - name: Publish jdk-8-alpine
-#      uses: elgohr/Publish-Docker-Github-Action@master
-#      with:
-#        name: setkeh/jdk-8-alpine
-#        username: ${{ secrets.DOCKER_USERNAME }}
-#        password: ${{ secrets.DOCKER_PASSWORD }}
-#        snapshot: true
-#        workdir: jdk-8-alpine
-#  build-jupyter:
-#    runs-on: self-hosted
-#    steps:
-#    - uses: actions/checkout@master
-#    - name: Publish jupyter
-#      uses: elgohr/Publish-Docker-Github-Action@master
-#      with:
-#        name: setkeh/jupyter
-#        username: ${{ secrets.DOCKER_USERNAME }}
-#        password: ${{ secrets.DOCKER_PASSWORD }}
-#        snapshot: true
-#        workdir: jupyter
-#  build-rundeck-alpine:
-#    runs-on: self-hosted
-#    steps:
-#    - uses: actions/checkout@master
-#    - name: Publish rundeck-alpine
-#      uses: elgohr/Publish-Docker-Github-Action@master
-#      with:
-#        name: setkeh/rundeck-alpine
-#        username: ${{ secrets.DOCKER_USERNAME }}
-#        password: ${{ secrets.DOCKER_PASSWORD }}
-#        snapshot: true
-#        workdir: rundeck-alpine
-#  build-terraform:
-#    runs-on: self-hosted
-#    steps:
-#    - uses: actions/checkout@master
-#    - name: Publish terraform
-#      uses: elgohr/Publish-Docker-Github-Action@master
-#      with:
-#        name: setkeh/terraform
-#        username: ${{ secrets.DOCKER_USERNAME }}
-#        password: ${{ secrets.DOCKER_PASSWORD }}
-#        snapshot: true
-#        workdir: terraform
-#
+  build-alpine-glibc:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Build the Docker image
+      run: docker build alpine-glibc/ -t setkeh/alpine-glibc:latest
+    - uses: anchore/scan-action@master
+      with:
+        image-reference: "setkeh/alpine-glibc:latest"
+        dockerfile-path: "alpine-glibc/Dockerfile"
+        fail-build: true
+    - name: anchore inline scan JSON results
+      run: for j in `ls ./anchore-reports/*.json`; do echo "---- ${j} ----"; cat ${j}; echo; done
+    - name: Docker Login
+      run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+    - name: Publish Docker Image
+      run: docker push setkeh/alpine-glibc:latest
+  build-archlinux-abs:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Build the Docker image
+      run: docker build archlinux-abs/ -t setkeh/archlinux-abs:latest
+    - uses: anchore/scan-action@master
+      with:
+        image-reference: "setkeh/archlinux-abs:latest"
+        dockerfile-path: "archlinux-abs/Dockerfile"
+        fail-build: true
+    - name: anchore inline scan JSON results
+      run: for j in `ls ./anchore-reports/*.json`; do echo "---- ${j} ----"; cat ${j}; echo; done
+    - name: Docker Login
+      run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+    - name: Publish Docker Image
+      run: docker push setkeh/archlinux-abs:latest
+  build-grafana-alpine:
+    runs-on: ubuntu-latest
+    needs: build-alpine-glibc
+    steps:
+    - uses: actions/checkout@v1
+    - name: Build the Docker image
+      run: docker build grafana-alpine/ -t setkeh/grafana-alpine:latest
+    - uses: anchore/scan-action@master
+      with:
+        image-reference: "setkeh/grafana-alpine:latest"
+        dockerfile-path: "grafana-alpine/Dockerfile"
+        fail-build: true
+    - name: anchore inline scan JSON results
+      run: for j in `ls ./anchore-reports/*.json`; do echo "---- ${j} ----"; cat ${j}; echo; done
+    - name: Docker Login
+      run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+    - name: Publish Docker Image
+      run: docker push setkeh/grafana-alpine:latest
+  build-haproxy-alpine:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Build the Docker image
+      run: docker build haproxy-alpine/ -t setkeh/haproxy-alpine:latest
+    - uses: anchore/scan-action@master
+      with:
+        image-reference: "setkeh/haproxy-alpine:latest"
+        dockerfile-path: "haproxy-alpine/Dockerfile"
+        fail-build: true
+    - name: anchore inline scan JSON results
+      run: for j in `ls ./anchore-reports/*.json`; do echo "---- ${j} ----"; cat ${j}; echo; done
+    - name: Docker Login
+      run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+    - name: Publish Docker Image
+      run: docker push setkeh/haproxy-alpine:latest
+  build-jdk-8-alpine:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Build the Docker image
+      run: docker build jdk-8-alpine/ -t setkeh/jdk-8-alpine:latest
+    - uses: anchore/scan-action@master
+      with:
+        image-reference: "setkeh/jdk-8-alpine:latest"
+        dockerfile-path: "jdk-8-alpine/Dockerfile"
+        fail-build: true
+    - name: anchore inline scan JSON results
+      run: for j in `ls ./anchore-reports/*.json`; do echo "---- ${j} ----"; cat ${j}; echo; done
+    - name: Docker Login
+      run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+    - name: Publish Docker Image
+      run: docker push setkeh/jdk-8-alpine:latest
+  build-jupyter:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Build the Docker image
+      run: docker build jupyter/ -t setkeh/jupyter:latest
+    - uses: anchore/scan-action@master
+      with:
+        image-reference: "setkeh/jupyter:latest"
+        dockerfile-path: "jupyter/Dockerfile"
+        fail-build: true
+    - name: anchore inline scan JSON results
+      run: for j in `ls ./anchore-reports/*.json`; do echo "---- ${j} ----"; cat ${j}; echo; done
+    - name: Docker Login
+      run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+    - name: Publish Docker Image
+      run: docker push setkeh/jupyter:latest
+  build-rundeck-alpine:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Build the Docker image
+      run: docker build rundeck-alpine/ -t setkeh/rundeck-alpine:latest
+    - uses: anchore/scan-action@master
+      with:
+        image-reference: "setkeh/rundeck-alpine:latest"
+        dockerfile-path: "rundeck-alpine/Dockerfile"
+        fail-build: true
+    - name: anchore inline scan JSON results
+      run: for j in `ls ./anchore-reports/*.json`; do echo "---- ${j} ----"; cat ${j}; echo; done
+    - name: Docker Login
+      run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+    - name: Publish Docker Image
+      run: docker push setkeh/rundeck-alpine:latest
+  build-terraform:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Build the Docker image
+      run: docker build terraform/ -t setkeh/terraform:latest
+    - uses: anchore/scan-action@master
+      with:
+        image-reference: "setkeh/terraform:latest"
+        dockerfile-path: "terraform/Dockerfile"
+        fail-build: true
+    - name: anchore inline scan JSON results
+      run: for j in `ls ./anchore-reports/*.json`; do echo "---- ${j} ----"; cat ${j}; echo; done
+    - name: Docker Login
+      run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+    - name: Publish Docker Image
+      run: docker push setkeh/terraform:latest
