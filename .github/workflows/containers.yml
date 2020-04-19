@@ -11,6 +11,7 @@ jobs:
       with:
         image-reference: "setkeh/aws-ecr-proxy:latest"
         dockerfile-path: "aws-ecr-proxy/Dockerfile"
+        include-app-packages: true
         fail-build: true
     - name: anchore inline scan JSON results
       run: for j in `ls ./anchore-reports/*.json`; do echo "---- ${j} ----"; cat ${j}; echo; done
@@ -28,6 +29,7 @@ jobs:
       with:
         image-reference: "setkeh/prometheus-alpine:latest"
         dockerfile-path: "prometheus-alpine/Dockerfile"
+        include-app-packages: true
         fail-build: true
     - name: anchore inline scan JSON results
       run: for j in `ls ./anchore-reports/*.json`; do echo "---- ${j} ----"; cat ${j}; echo; done
@@ -35,6 +37,8 @@ jobs:
       run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
     - name: Publish Docker Image
       run: docker push setkeh/prometheus-alpine:latest
+    - name: see what stuff is in reports
+      run: ls ./anchore-reports
   build-alpine-glibc:
     runs-on: ubuntu-latest
     steps:
@@ -45,6 +49,7 @@ jobs:
       with:
         image-reference: "setkeh/alpine-glibc:latest"
         dockerfile-path: "alpine-glibc/Dockerfile"
+        include-app-packages: true
         fail-build: true
     - name: anchore inline scan JSON results
       run: for j in `ls ./anchore-reports/*.json`; do echo "---- ${j} ----"; cat ${j}; echo; done
@@ -62,6 +67,7 @@ jobs:
       with:
         image-reference: "setkeh/archlinux-abs:latest"
         dockerfile-path: "archlinux-abs/Dockerfile"
+        include-app-packages: true
         fail-build: true
     - name: anchore inline scan JSON results
       run: for j in `ls ./anchore-reports/*.json`; do echo "---- ${j} ----"; cat ${j}; echo; done
@@ -80,6 +86,7 @@ jobs:
       with:
         image-reference: "setkeh/grafana-alpine:latest"
         dockerfile-path: "grafana-alpine/Dockerfile"
+        include-app-packages: true
         fail-build: true
     - name: anchore inline scan JSON results
       run: for j in `ls ./anchore-reports/*.json`; do echo "---- ${j} ----"; cat ${j}; echo; done
@@ -97,6 +104,7 @@ jobs:
       with:
         image-reference: "setkeh/haproxy-alpine:latest"
         dockerfile-path: "haproxy-alpine/Dockerfile"
+        include-app-packages: true
         fail-build: true
     - name: anchore inline scan JSON results
       run: for j in `ls ./anchore-reports/*.json`; do echo "---- ${j} ----"; cat ${j}; echo; done
@@ -114,6 +122,7 @@ jobs:
       with:
         image-reference: "setkeh/jdk-8-alpine:latest"
         dockerfile-path: "jdk-8-alpine/Dockerfile"
+        include-app-packages: true
         fail-build: true
     - name: anchore inline scan JSON results
       run: for j in `ls ./anchore-reports/*.json`; do echo "---- ${j} ----"; cat ${j}; echo; done
@@ -131,6 +140,7 @@ jobs:
       with:
         image-reference: "setkeh/jupyter:latest"
         dockerfile-path: "jupyter/Dockerfile"
+        include-app-packages: true
         fail-build: true
     - name: anchore inline scan JSON results
       run: for j in `ls ./anchore-reports/*.json`; do echo "---- ${j} ----"; cat ${j}; echo; done
@@ -148,6 +158,7 @@ jobs:
       with:
         image-reference: "setkeh/rundeck-alpine:latest"
         dockerfile-path: "rundeck-alpine/Dockerfile"
+        include-app-packages: true
         fail-build: true
     - name: anchore inline scan JSON results
       run: for j in `ls ./anchore-reports/*.json`; do echo "---- ${j} ----"; cat ${j}; echo; done
@@ -165,6 +176,7 @@ jobs:
       with:
         image-reference: "setkeh/terraform:latest"
         dockerfile-path: "terraform/Dockerfile"
+        include-app-packages: true
         fail-build: true
     - name: anchore inline scan JSON results
       run: for j in `ls ./anchore-reports/*.json`; do echo "---- ${j} ----"; cat ${j}; echo; done
