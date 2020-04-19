@@ -14,6 +14,16 @@ jobs:
         fail-build: true
     - name: anchore inline scan JSON results
       run: for j in `ls ./anchore-reports/*.json`; do echo "---- ${j} ----"; cat ${j}; echo; done
+    - uses: actions/upload-artifact@v1
+      if: failure()
+      with:
+        name: ecr-container-failure-reports
+        path: ./anchore-reports
+    - uses: actions/upload-artifact@v1
+      if: failure()
+      with:
+        name: ecr-container-reports
+        path: ./anchore-reports
     - name: Docker Login
       run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
     - name: Publish Docker Image
@@ -31,6 +41,16 @@ jobs:
         fail-build: true
     - name: anchore inline scan JSON results
       run: for j in `ls ./anchore-reports/*.json`; do echo "---- ${j} ----"; cat ${j}; echo; done
+    - uses: actions/upload-artifact@v1
+      if: failure()
+      with:
+        name: prometheus-alpine-failure-reports
+        path: ./anchore-reports
+    - uses: actions/upload-artifact@v1
+      if: failure()
+      with:
+        name: prometheus-alpine-reports
+        path: ./anchore-reports
     - name: Docker Login
       run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
     - name: Publish Docker Image
@@ -50,6 +70,16 @@ jobs:
         fail-build: true
     - name: anchore inline scan JSON results
       run: for j in `ls ./anchore-reports/*.json`; do echo "---- ${j} ----"; cat ${j}; echo; done
+    - uses: actions/upload-artifact@v1
+      if: failure()
+      with:
+        name: alpine-glibc-failure-reports
+        path: ./anchore-reports
+    - uses: actions/upload-artifact@v1
+      if: failure()
+      with:
+        name: alpine-glibc-reports
+        path: ./anchore-reports
     - name: Docker Login
       run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
     - name: Publish Docker Image
@@ -67,6 +97,16 @@ jobs:
         fail-build: true
     - name: anchore inline scan JSON results
       run: for j in `ls ./anchore-reports/*.json`; do echo "---- ${j} ----"; cat ${j}; echo; done
+    - uses: actions/upload-artifact@v1
+      if: failure()
+      with:
+        name: archlinux-abs-failure-reports
+        path: ./anchore-reports
+    - uses: actions/upload-artifact@v1
+      if: failure()
+      with:
+        name: archlinux-abs-reports
+        path: ./anchore-reports
     - name: Docker Login
       run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
     - name: Publish Docker Image
@@ -85,6 +125,16 @@ jobs:
         fail-build: true
     - name: anchore inline scan JSON results
       run: for j in `ls ./anchore-reports/*.json`; do echo "---- ${j} ----"; cat ${j}; echo; done
+    - uses: actions/upload-artifact@v1
+      if: failure()
+      with:
+        name: grafana-alpine-failure-reports
+        path: ./anchore-reports
+    - uses: actions/upload-artifact@v1
+      if: failure()
+      with:
+        name: grafana-alpine-reports
+        path: ./anchore-reports
     - name: Docker Login
       run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
     - name: Publish Docker Image
@@ -102,6 +152,16 @@ jobs:
         fail-build: true
     - name: anchore inline scan JSON results
       run: for j in `ls ./anchore-reports/*.json`; do echo "---- ${j} ----"; cat ${j}; echo; done
+    - uses: actions/upload-artifact@v1
+      if: failure()
+      with:
+        name: haproxy-alpine-failure-reports
+        path: ./anchore-reports
+    - uses: actions/upload-artifact@v1
+      if: failure()
+      with:
+        name: haproxy-alpine-reports
+        path: ./anchore-reports
     - name: Docker Login
       run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
     - name: Publish Docker Image
@@ -119,6 +179,16 @@ jobs:
         fail-build: true
     - name: anchore inline scan JSON results
       run: for j in `ls ./anchore-reports/*.json`; do echo "---- ${j} ----"; cat ${j}; echo; done
+    - uses: actions/upload-artifact@v1
+      if: failure()
+      with:
+        name: jdk-8-alpine-failure-reports
+        path: ./anchore-reports
+    - uses: actions/upload-artifact@v1
+      if: failure()
+      with:
+        name: jdk-8-alpine-reports
+        path: ./anchore-reports
     - name: Docker Login
       run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
     - name: Publish Docker Image
@@ -136,6 +206,16 @@ jobs:
         fail-build: true
     - name: anchore inline scan JSON results
       run: for j in `ls ./anchore-reports/*.json`; do echo "---- ${j} ----"; cat ${j}; echo; done
+    - uses: actions/upload-artifact@v1
+      if: failure()
+      with:
+        name: jupyter-failure-reports
+        path: ./anchore-reports
+    - uses: actions/upload-artifact@v1
+      if: failure()
+      with:
+        name: jupyter-reports
+        path: ./anchore-reports
     - name: Docker Login
       run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
     - name: Publish Docker Image
@@ -153,6 +233,16 @@ jobs:
         fail-build: true
     - name: anchore inline scan JSON results
       run: for j in `ls ./anchore-reports/*.json`; do echo "---- ${j} ----"; cat ${j}; echo; done
+    - uses: actions/upload-artifact@v1
+      if: failure()
+      with:
+        name: rundeck-alpine-failure-reports
+        path: ./anchore-reports
+    - uses: actions/upload-artifact@v1
+      if: failure()
+      with:
+        name: rundeck-alpine-reports
+        path: ./anchore-reports
     - name: Docker Login
       run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
     - name: Publish Docker Image
@@ -170,6 +260,16 @@ jobs:
         fail-build: true
     - name: anchore inline scan JSON results
       run: for j in `ls ./anchore-reports/*.json`; do echo "---- ${j} ----"; cat ${j}; echo; done
+    - uses: actions/upload-artifact@v1
+      if: failure()
+      with:
+        name: terraform-failure-reports
+        path: ./anchore-reports
+    - uses: actions/upload-artifact@v1
+      if: failure()
+      with:
+        name: terraform-reports
+        path: ./anchore-reports
     - name: Docker Login
       run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
     - name: Publish Docker Image
