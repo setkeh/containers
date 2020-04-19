@@ -20,7 +20,6 @@ jobs:
         name: ecr-container-failure-reports
         path: ./anchore-reports
     - uses: actions/upload-artifact@v1
-      if: failure()
       with:
         name: ecr-container-reports
         path: ./anchore-reports
@@ -47,7 +46,6 @@ jobs:
         name: prometheus-alpine-failure-reports
         path: ./anchore-reports
     - uses: actions/upload-artifact@v1
-      if: failure()
       with:
         name: prometheus-alpine-reports
         path: ./anchore-reports
@@ -55,8 +53,6 @@ jobs:
       run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
     - name: Publish Docker Image
       run: docker push setkeh/prometheus-alpine:latest
-    - name: see what stuff is in reports
-      run: ls ./anchore-reports
   build-alpine-glibc:
     runs-on: ubuntu-latest
     steps:
@@ -76,7 +72,6 @@ jobs:
         name: alpine-glibc-failure-reports
         path: ./anchore-reports
     - uses: actions/upload-artifact@v1
-      if: failure()
       with:
         name: alpine-glibc-reports
         path: ./anchore-reports
@@ -103,7 +98,6 @@ jobs:
         name: archlinux-abs-failure-reports
         path: ./anchore-reports
     - uses: actions/upload-artifact@v1
-      if: failure()
       with:
         name: archlinux-abs-reports
         path: ./anchore-reports
@@ -131,7 +125,6 @@ jobs:
         name: grafana-alpine-failure-reports
         path: ./anchore-reports
     - uses: actions/upload-artifact@v1
-      if: failure()
       with:
         name: grafana-alpine-reports
         path: ./anchore-reports
@@ -158,7 +151,6 @@ jobs:
         name: haproxy-alpine-failure-reports
         path: ./anchore-reports
     - uses: actions/upload-artifact@v1
-      if: failure()
       with:
         name: haproxy-alpine-reports
         path: ./anchore-reports
@@ -185,7 +177,6 @@ jobs:
         name: jdk-8-alpine-failure-reports
         path: ./anchore-reports
     - uses: actions/upload-artifact@v1
-      if: failure()
       with:
         name: jdk-8-alpine-reports
         path: ./anchore-reports
@@ -212,7 +203,6 @@ jobs:
         name: jupyter-failure-reports
         path: ./anchore-reports
     - uses: actions/upload-artifact@v1
-      if: failure()
       with:
         name: jupyter-reports
         path: ./anchore-reports
@@ -239,7 +229,6 @@ jobs:
         name: rundeck-alpine-failure-reports
         path: ./anchore-reports
     - uses: actions/upload-artifact@v1
-      if: failure()
       with:
         name: rundeck-alpine-reports
         path: ./anchore-reports
@@ -266,7 +255,6 @@ jobs:
         name: terraform-failure-reports
         path: ./anchore-reports
     - uses: actions/upload-artifact@v1
-      if: failure()
       with:
         name: terraform-reports
         path: ./anchore-reports
