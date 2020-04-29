@@ -1,4 +1,4 @@
-FROM alpine:latest
+FROM python:3.7.7-alpine3.11
 
 LABEL maintainer="setkeh@gmail.com"
 LABEL version="0.0.1"
