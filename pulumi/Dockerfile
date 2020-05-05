@@ -6,6 +6,7 @@ LABEL version="0.0.1"
 RUN apk add --update --no-cache ca-certificates gcc build-base python3 python3-dev py3-pip py3-virtualenv gpgme-dev libc-dev curl libc6-compat \
     && curl -fsSL https://get.pulumi.com/ | sh \
     && mkdir -p /opt/pulumi \
-    && pip install --upgrade pip
+    && pip install --upgrade pip \
+    && pip3 install --upgrade pip awscli==1.16.132
 
 WORKDIR /opt/pulumi
