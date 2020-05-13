@@ -7,5 +7,5 @@ RUN apk add --update --no-cache ca-certificates gcc build-base python3 python3-d
     && curl -fsSL https://get.pulumi.com/ | sh \
     && mkdir -p /opt/pulumi \
     && pip install --upgrade pip \
-    && pip3 install --upgrade pip awscli==1.16.132 pulumi pulumi-aws
+    && pip3 install --upgrade pip awscli pulumi pulumi-aws
 WORKDIR /opt/pulumi
