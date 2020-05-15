@@ -267,10 +267,10 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Build the Docker image
-      run: docker build pulumi/ -t setkeh/pulumi-alpine:latest
+      run: docker build pulumi/ -t setkeh/pulumi:latest
     - uses: anchore/scan-action@master
       with:
-        image-reference: "setkeh/pulumi-alpine:latest"
+        image-reference: "setkeh/pulumi:latest"
         dockerfile-path: "pulumi/Dockerfile"
         fail-build: true
     - name: anchore inline scan JSON results
@@ -287,4 +287,4 @@ jobs:
     - name: Docker Login
       run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
     - name: Publish Docker Image
-      run: docker push setkeh/pulumi-alpine:latest
+      run: docker push setkeh/pulumi:latest
