@@ -1,7 +1,7 @@
 name: Build And Publish Development Environment Base Containers
 on: [push]
 jobs:
-  build-dev-golang-1.13.11-buster-container:
+  build-dev-golang-1-13-11-buster-container:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
