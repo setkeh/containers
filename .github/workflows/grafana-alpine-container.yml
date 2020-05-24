@@ -1,6 +1,32 @@
-name: Build And Publish Grafana Alpine Container
+name: Build And Publish Grafana Alpine And Alpine Glibc Container
 on: [push]
 jobs:
+  build-alpine-glibc:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Build the Docker image
+      run: docker build alpine-glibc/ -t setkeh/alpine-glibc:latest
+    - uses: anchore/scan-action@master
+      with:
+        image-reference: "setkeh/alpine-glibc:latest"
+        dockerfile-path: "alpine-glibc/Dockerfile"
+        fail-build: true
+    - name: anchore inline scan JSON results
+      run: for j in `ls ./anchore-reports/*.json`; do echo "---- ${j} ----"; cat ${j}; echo; done
+    - uses: actions/upload-artifact@v1
+      if: failure()
+      with:
+        name: alpine-glibc-failure-reports
+        path: ./anchore-reports
+    - uses: actions/upload-artifact@v1
+      with:
+        name: alpine-glibc-reports
+        path: ./anchore-reports
+    - name: Docker Login
+      run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+    - name: Publish Docker Image
+      run: docker push setkeh/alpine-glibc:latest
   build-grafana-alpine:
     runs-on: ubuntu-latest
     needs: build-alpine-glibc
