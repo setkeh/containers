@@ -7,8 +7,7 @@ jobs:
     - uses: actions/checkout@v1
     - name: Build the Docker image
       run: docker build -t setkeh/dev-golang:1.13.11-buster -f dev-base-containers/golang-1.13.11-buster.Dockerfile dev-base-containers/
-    - uses: anchore/scan-action@master
-      with:
-        image-reference: "setkeh/dev-golang:1.13.11-buster"
-        dockerfile-path: "dev-base-containers/golang-1.13.11-buster.Dockerfile"
-        fail-build: true
+    - name: Docker Login
+      run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+    - name: Publish Docker Image
+      run: docker push setkeh/aws-ecr-proxy:latest
