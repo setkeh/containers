@@ -1,0 +1,14 @@
+name: Build And Publish Development Environment Base Containers
+on: [push]
+jobs:
+  build-dev-golang:1.13.11-buster-container:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Build the Docker image
+      run: docker build dev-base-containers/ -t setkeh/dev-golang:1.13.11-buster
+    - uses: anchore/scan-action@master
+      with:
+        image-reference: "setkeh/dev-golang:1.13.11-buster"
+        dockerfile-path: "dev-base-containers/golang-1.13.11-buster.Dockerfile"
+        fail-build: true
