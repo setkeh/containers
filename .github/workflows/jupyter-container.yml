@@ -1,0 +1,29 @@
+name: Build And Publish Jupyter Container
+on: [push]
+jobs:
+  build-jupyter:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Build the Docker image
+      run: docker build jupyter/ -t setkeh/jupyter:latest
+    - uses: anchore/scan-action@master
+      with:
+        image-reference: "setkeh/jupyter:latest"
+        dockerfile-path: "jupyter/Dockerfile"
+        fail-build: true
+    - name: anchore inline scan JSON results
+      run: for j in `ls ./anchore-reports/*.json`; do echo "---- ${j} ----"; cat ${j}; echo; done
+    - uses: actions/upload-artifact@v1
+      if: failure()
+      with:
+        name: jupyter-failure-reports
+        path: ./anchore-reports
+    - uses: actions/upload-artifact@v1
+      with:
+        name: jupyter-reports
+        path: ./anchore-reports
+    - name: Docker Login
+      run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+    - name: Publish Docker Image
+      run: docker push setkeh/jupyter:latest

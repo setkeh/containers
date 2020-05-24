@@ -1,0 +1,29 @@
+name: Build And Publish Haproxy Container
+on: [push]
+jobs:
+  build-haproxy-alpine:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Build the Docker image
+      run: docker build haproxy-alpine/ -t setkeh/haproxy-alpine:latest
+    - uses: anchore/scan-action@master
+      with:
+        image-reference: "setkeh/haproxy-alpine:latest"
+        dockerfile-path: "haproxy-alpine/Dockerfile"
+        fail-build: true
+    - name: anchore inline scan JSON results
+      run: for j in `ls ./anchore-reports/*.json`; do echo "---- ${j} ----"; cat ${j}; echo; done
+    - uses: actions/upload-artifact@v1
+      if: failure()
+      with:
+        name: haproxy-alpine-failure-reports
+        path: ./anchore-reports
+    - uses: actions/upload-artifact@v1
+      with:
+        name: haproxy-alpine-reports
+        path: ./anchore-reports
+    - name: Docker Login
+      run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+    - name: Publish Docker Image
+      run: docker push setkeh/haproxy-alpine:latest

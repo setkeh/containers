@@ -1,0 +1,29 @@
+name: Build And Publish Pulumi Container
+on: [push]
+jobs:
+  build-pulumi-container:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Build the Docker image
+      run: docker build pulumi/ -t setkeh/pulumi:latest
+    - uses: anchore/scan-action@master
+      with:
+        image-reference: "setkeh/pulumi:latest"
+        dockerfile-path: "pulumi/Dockerfile"
+        fail-build: true
+    - name: anchore inline scan JSON results
+      run: for j in `ls ./anchore-reports/*.json`; do echo "---- ${j} ----"; cat ${j}; echo; done
+    - uses: actions/upload-artifact@v1
+      if: failure()
+      with:
+        name: pulumi-container-failure-reports
+        path: ./anchore-reports
+    - uses: actions/upload-artifact@v1
+      with:
+        name: pulumi-container-reports
+        path: ./anchore-reports
+    - name: Docker Login
+      run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+    - name: Publish Docker Image
+      run: docker push setkeh/pulumi:latest

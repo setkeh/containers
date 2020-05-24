@@ -1,0 +1,29 @@
+name: Build And Publish Archlinux ABS Container
+on: [push]
+jobs:
+  build-archlinux-abs:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Build the Docker image
+      run: docker build archlinux-abs/ -t setkeh/archlinux-abs:latest
+    - uses: anchore/scan-action@master
+      with:
+        image-reference: "setkeh/archlinux-abs:latest"
+        dockerfile-path: "archlinux-abs/Dockerfile"
+        fail-build: true
+    - name: anchore inline scan JSON results
+      run: for j in `ls ./anchore-reports/*.json`; do echo "---- ${j} ----"; cat ${j}; echo; done
+    - uses: actions/upload-artifact@v1
+      if: failure()
+      with:
+        name: archlinux-abs-failure-reports
+        path: ./anchore-reports
+    - uses: actions/upload-artifact@v1
+      with:
+        name: archlinux-abs-reports
+        path: ./anchore-reports
+    - name: Docker Login
+      run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+    - name: Publish Docker Image
+      run: docker push setkeh/archlinux-abs:latest

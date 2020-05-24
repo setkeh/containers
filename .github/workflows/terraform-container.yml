@@ -1,0 +1,29 @@
+name: Build And Publish Terraform Container
+on: [push]
+jobs:
+  build-terraform:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Build the Docker image
+      run: docker build terraform/ -t setkeh/terraform:latest
+    - uses: anchore/scan-action@master
+      with:
+        image-reference: "setkeh/terraform:latest"
+        dockerfile-path: "terraform/Dockerfile"
+        fail-build: true
+    - name: anchore inline scan JSON results
+      run: for j in `ls ./anchore-reports/*.json`; do echo "---- ${j} ----"; cat ${j}; echo; done
+    - uses: actions/upload-artifact@v1
+      if: failure()
+      with:
+        name: terraform-failure-reports
+        path: ./anchore-reports
+    - uses: actions/upload-artifact@v1
+      with:
+        name: terraform-reports
+        path: ./anchore-reports
+    - name: Docker Login
+      run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+    - name: Publish Docker Image
+      run: docker push setkeh/terraform:latest
