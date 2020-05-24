@@ -10,4 +10,4 @@ jobs:
     - name: Docker Login
       run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
     - name: Publish Docker Image
-      run: docker push setkeh/aws-ecr-proxy:latest
+      run: docker push setkeh/dev-golang:1.13.11-buster
