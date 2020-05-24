@@ -6,7 +6,7 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Build the Docker image
-      run: docker build dev-base-containers/ -f build dev-base-containers/golang-1.13.11-buster.Dockerfile -t setkeh/dev-golang:1.13.11-buster
+      run: docker build dev-base-containers/ -t setkeh/dev-golang:1.13.11-buster -f build dev-base-containers/golang-1.13.11-buster.Dockerfile
     - uses: anchore/scan-action@master
       with:
         image-reference: "setkeh/dev-golang:1.13.11-buster"
