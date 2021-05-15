@@ -7,7 +7,7 @@ jobs:
     - uses: actions/checkout@v1
     - name: Build the Docker image
       run: docker build archlinux-abs/ -t setkeh/archlinux-abs:latest
-    - uses: anchore/scan-action@master
+    - uses: anchore/scan-action@v2
       with:
         image-reference: "setkeh/archlinux-abs:latest"
         dockerfile-path: "archlinux-abs/Dockerfile"

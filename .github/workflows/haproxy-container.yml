@@ -7,7 +7,7 @@ jobs:
     - uses: actions/checkout@v1
     - name: Build the Docker image
       run: docker build haproxy-alpine/ -t setkeh/haproxy-alpine:latest
-    - uses: anchore/scan-action@master
+    - uses: anchore/scan-action@v2
       with:
         image-reference: "setkeh/haproxy-alpine:latest"
         dockerfile-path: "haproxy-alpine/Dockerfile"

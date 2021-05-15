@@ -7,7 +7,7 @@ jobs:
     - uses: actions/checkout@v1
     - name: Build the Docker image
       run: docker build terraform/ -t setkeh/terraform:latest
-    - uses: anchore/scan-action@master
+    - uses: anchore/scan-action@v2
       with:
         image-reference: "setkeh/terraform:latest"
         dockerfile-path: "terraform/Dockerfile"
