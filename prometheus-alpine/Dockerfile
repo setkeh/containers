@@ -6,7 +6,7 @@ LABEL version="1.0"
 ARG PROM_UID="473"
 ARG PROM_GID="473"
 
-ENV prometheus_version 2.13.1
+ENV prometheus_version 2.27.0
 
 RUN apk add --update --no-cache ca-certificates shadow \
     && adduser -S -u $PROM_UID -s /bin/false -D -H prometheus \

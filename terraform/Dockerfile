@@ -1,7 +1,7 @@
 FROM golang:alpine
 MAINTAINER "James <SETKEH> Griffis <setkeh@gmail.com>"
 
-ENV TERRAFORM_VERSION=0.12.24
+ENV TERRAFORM_VERSION=0.15.3
 
 RUN apk update && apk upgrade && apk add --update \
       git \
@@ -13,7 +13,7 @@ RUN apk update && apk upgrade && apk add --update \
       jq && \
     mkdir -p /etc/ssl/certs/ && \
     update-ca-certificates --fresh && \
-    pip3 install --upgrade pip awscli==1.16.132
+    pip3 install --upgrade pip awscli
 
 ENV TF_DEV=true
 ENV TF_RELEASE=true

@@ -2,7 +2,7 @@ FROM setkeh/alpine-glibc:latest
 
 LABEL maintainer "James Griffis <setkeh@gmail.com>"
 
-ARG GRAFANA_VER="6.4.4"
+ARG GRAFANA_VER="7.5.6"
 ARG GRAFANA_URL="https://dl.grafana.com/oss/release/grafana-${GRAFANA_VER}.linux-amd64.tar.gz"
 ARG GF_UID="472"
 ARG GF_GID="472"

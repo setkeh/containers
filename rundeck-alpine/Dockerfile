@@ -2,7 +2,7 @@ FROM setkeh/jdk-8-alpine:latest
 
 LABEL maintainer "James Griffis <setkeh@gmail.com>"
 
-ADD http://dl.bintray.com/rundeck/rundeck-maven/rundeck-launcher-2.6.11.jar /opt/rundeck/
+ADD http://dl.bintray.com/rundeck/rundeck-maven/rundeck-launcher-3.3.11.jar /opt/rundeck/
 
 COPY entrypoint.sh /entrypoint.sh
 
