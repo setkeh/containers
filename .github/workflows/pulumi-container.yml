@@ -9,9 +9,9 @@ jobs:
       run: docker build pulumi/ -t setkeh/pulumi:latest
     - uses: anchore/scan-action@v2
       with:
-        image-reference: "setkeh/pulumi:latest"
-        dockerfile-path: "pulumi/Dockerfile"
+        image: "setkeh/pulumi:latest"
         fail-build: true
+        severity-cutoff: critical
     - name: anchore inline scan JSON results
       run: for j in `ls ./anchore-reports/*.json`; do echo "---- ${j} ----"; cat ${j}; echo; done
     - uses: actions/upload-artifact@v1

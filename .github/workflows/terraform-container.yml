@@ -9,9 +9,9 @@ jobs:
       run: docker build terraform/ -t setkeh/terraform:latest
     - uses: anchore/scan-action@v2
       with:
-        image-reference: "setkeh/terraform:latest"
-        dockerfile-path: "terraform/Dockerfile"
+        image: "setkeh/terraform:latest"
         fail-build: true
+        severity-cutoff: critical
     - name: anchore inline scan JSON results
       run: for j in `ls ./anchore-reports/*.json`; do echo "---- ${j} ----"; cat ${j}; echo; done
     - uses: actions/upload-artifact@v1

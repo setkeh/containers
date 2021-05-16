@@ -9,9 +9,9 @@ jobs:
       run: docker build haproxy-alpine/ -t setkeh/haproxy-alpine:latest
     - uses: anchore/scan-action@v2
       with:
-        image-reference: "setkeh/haproxy-alpine:latest"
-        dockerfile-path: "haproxy-alpine/Dockerfile"
+        image: "setkeh/haproxy-alpine:latest"
         fail-build: true
+        severity-cutoff: critical
     - name: anchore inline scan JSON results
       run: for j in `ls ./anchore-reports/*.json`; do echo "---- ${j} ----"; cat ${j}; echo; done
     - uses: actions/upload-artifact@v1

@@ -9,9 +9,9 @@ jobs:
       run: docker build jdk-8-alpine/ -t setkeh/jdk-8-alpine:latest
     - uses: anchore/scan-action@v2
       with:
-        image-reference: "setkeh/jdk-8-alpine:latest"
-        dockerfile-path: "jdk-8-alpine/Dockerfile"
+        image: "setkeh/jdk-8-alpine:latest"
         fail-build: true
+        severity-cutoff: critical
     - name: anchore inline scan JSON results
       run: for j in `ls ./anchore-reports/*.json`; do echo "---- ${j} ----"; cat ${j}; echo; done
     - uses: actions/upload-artifact@v1

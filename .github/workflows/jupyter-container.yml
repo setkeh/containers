@@ -9,9 +9,9 @@ jobs:
       run: docker build jupyter/ -t setkeh/jupyter:latest
     - uses: anchore/scan-action@v2
       with:
-        image-reference: "setkeh/jupyter:latest"
-        dockerfile-path: "jupyter/Dockerfile"
+        image: "setkeh/jupyter:latest"
         fail-build: true
+        severity-cutoff: critical
     - name: anchore inline scan JSON results
       run: for j in `ls ./anchore-reports/*.json`; do echo "---- ${j} ----"; cat ${j}; echo; done
     - uses: actions/upload-artifact@v1

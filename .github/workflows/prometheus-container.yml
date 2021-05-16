@@ -9,9 +9,9 @@ jobs:
       run: docker build prometheus-alpine/ -t setkeh/prometheus-alpine:latest
     - uses: anchore/scan-action@v2
       with:
-        image-reference: "setkeh/prometheus-alpine:latest"
-        dockerfile-path: "prometheus-alpine/Dockerfile"
+        image: "setkeh/prometheus-alpine:latest"
         fail-build: true
+        severity-cutoff: critical
     - name: anchore inline scan JSON results
       run: for j in `ls ./anchore-reports/*.json`; do echo "---- ${j} ----"; cat ${j}; echo; done
     - uses: actions/upload-artifact@v1
