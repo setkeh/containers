@@ -8,7 +8,7 @@ ARG PROM_GID="473"
 
 ENV prometheus_version 2.27.0
 
-RUN linux-pam --repository=http://dl-cdn.alpinelinux.org/alpine/edge/main
+RUN apk add linux-pam --repository=http://dl-cdn.alpinelinux.org/alpine/edge/main
 
 RUN apk add --update --no-cache ca-certificates shadow \
     && adduser -S -u $PROM_UID -s /bin/false -D -H prometheus \
