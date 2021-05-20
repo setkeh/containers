@@ -9,9 +9,9 @@ jobs:
       run: docker build alpine-glibc/ -t setkeh/alpine-glibc:latest
     - uses: anchore/scan-action@v2
       with:
-        image-reference: "setkeh/alpine-glibc:latest"
-        dockerfile-path: "alpine-glibc/Dockerfile"
+        image: "setkeh/alpine-glibc:latest"
         fail-build: true
+        severity-cutoff: critical
     - name: anchore inline scan JSON results
       run: for j in `ls ./anchore-reports/*.json`; do echo "---- ${j} ----"; cat ${j}; echo; done
     - uses: actions/upload-artifact@v1
@@ -36,9 +36,9 @@ jobs:
       run: docker build grafana-alpine/ -t setkeh/grafana-alpine:latest
     - uses: anchore/scan-action@master
       with:
-        image-reference: "setkeh/grafana-alpine:latest"
-        dockerfile-path: "grafana-alpine/Dockerfile"
+        image: "setkeh/grafana-alpine:latest"
         fail-build: true
+        severity-cutoff: critical
     - name: anchore inline scan JSON results
       run: for j in `ls ./anchore-reports/*.json`; do echo "---- ${j} ----"; cat ${j}; echo; done
     - uses: actions/upload-artifact@v1
